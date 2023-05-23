@@ -1,0 +1,182 @@
+﻿@using System.Data
+@using Api3il.Models;
+@model DataTable
+
+@{
+    var ListeEtudiant = ViewData["Etudiant"] as List<Etudiant>;
+    var ListeGroupe = ViewData["Groupe"] as List<Groupe>;
+    var ListePromotion = ViewData["Promotion"] as List<Promotion>;
+    var ListePresence = ViewData["Emargement"] as List<Emargement>;
+
+     string GetPresenceStatus(DateTime dateEmargement)
+        {
+            TimeSpan timeOfDay = dateEmargement.TimeOfDay;
+
+            TimeSpan plage1Start = new TimeSpan(8, 35, 0);
+            TimeSpan plage1End = new TimeSpan(10, 0, 0);
+            TimeSpan plage2Start = new TimeSpan(10, 35, 0);
+            TimeSpan plage2End = new TimeSpan(12, 0, 0);
+            TimeSpan plage3Start = new TimeSpan(13, 30, 0);
+            TimeSpan plage3End = new TimeSpan(15, 0, 0);
+            TimeSpan plage4Start = new TimeSpan(15, 15, 0);
+            TimeSpan plage4End = new TimeSpan(16, 45, 0);
+
+            if ((timeOfDay >= plage1Start && timeOfDay <= plage1End) ||
+                (timeOfDay >= plage2Start && timeOfDay <= plage2End) ||
+                (timeOfDay >= plage3Start && timeOfDay <= plage3End) ||
+                (timeOfDay >= plage4Start && timeOfDay <= plage4End))
+            {
+                return "Absent";
+            }
+            else
+            {
+                return "Présent";
+            }
+        }
+}
+
+<style>
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .table-header {
+       /* background-color: #007bff;*/
+        color: #fff;
+        font-weight: bold;
+        font-size:20px;
+
+    }
+
+    .table-row {
+        background-color: #fff;
+    }
+
+    .table-row:hover {
+        background-color: #f8f9fa;
+    }
+
+    .filter-input {
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 300px;
+    }
+</style>
+
+<script>
+    function filterTable() {
+        var input = document.getElementById("filterInput").value.toUpperCase();
+        var table = document.getElementById("etudiantTable");
+        var tr = table.getElementsByTagName("tr");
+        for (var i = 0; i < tr.length; i++) {
+            var tdNom = tr[i].getElementsByTagName("td")[0];
+            var tdGroupe = tr[i].getElementsByTagName("td")[2];
+            var tdPromotion = tr[i].getElementsByTagName("td")[3];
+            if (tdNom || tdGroupe || tdPromotion) {
+                var nom = tdNom.textContent || tdNom.innerText;
+                var groupe = tdGroupe.textContent || tdGroupe.innerText;
+                var promotion = tdPromotion.textContent || tdPromotion.innerText;
+                if (nom.toUpperCase().indexOf(input) > -1 ||
+                    groupe.toUpperCase().indexOf(input) > -1 ||
+                    promotion.toUpperCase().indexOf(input) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+       function filterByDate(date) {
+        var tableRows = document.getElementsByClassName("date-emargement");
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var rowDate = new Date(row.getAttribute("data-emargement-date"));
+            if (rowDate.toDateString() === date.toDateString()) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+     function resetTable() {
+        var tableRows = document.getElementsByClassName("date-emargement");
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            row.style.display = "";
+        }
+    }
+</script>
+
+<center>
+    <h2>Liste des étudiants qui ont émargé</h2>
+</center>
+
+<div>
+    <label for="filterInput">Recherche : </label>
+    <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Rechercher par groupe, nom ou promotion...">
+</div>
+<div>
+    <button onclick="resetTable()">Réinitialiser</button>
+</div>
+
+<table id="etudiantTable" class="table">
+    <thead>
+        <tr>
+            <th class="table-header">@Html.DisplayName("Nom")</th>
+            <th class="table-header">@Html.DisplayName("Prénom")</th>
+            <th class="table-header">@Html.DisplayName("Groupe")</th>
+            <th class="table-header">@Html.DisplayName("Promotion")</th>
+            <th class="table-header">@Html.DisplayName("Presence")</th>
+            <th class="table-header">@Html.DisplayName("Statut")</th>
+
+        </tr>
+    </thead>
+    <!-- ... -->
+
+<tbody>
+    @if (ListeEtudiant != null)
+    {
+         ListePresence = ListePresence.OrderByDescending(p => p.DateEmargement).ToList();
+        @foreach (Etudiant row in ListeEtudiant)
+        {
+            @foreach (Groupe row1 in ListeGroupe)
+            {
+                @foreach (Promotion row2 in ListePromotion)
+                {
+                    @foreach (Emargement row3 in ListePresence)
+                    {
+                        @if (row.GroupeId == row1.Id && row.PromotionId == row2.Id && row3.EtudiantId == row.Id)
+                        {
+                            <tr class="table-row date-emargement" data-emargement-date="@row3.DateEmargement">
+                                <td>@row.Nom</td>
+                                <td>@row.Prenom</td>
+                                <td>@row1.Nom</td>
+                                <td>@row2.Annee</td>
+                                 <td><a href="#" onclick="filterByDate(new Date('@row3.DateEmargement'));">@row3.DateEmargement</a></td>
+                                @{
+                                    string presenceStatus = GetPresenceStatus(row3.DateEmargement);
+                                    string statusClass = (presenceStatus == "Absent") ? "text-danger" : "text-success";
+                                }
+                                <td class="@statusClass">@presenceStatus</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        }
+    }
+</tbody>
+
+<!-- ... -->
+
+</table>
