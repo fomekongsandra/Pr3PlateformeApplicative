@@ -121,7 +121,7 @@
   <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAAGiFJREFUeF7tXWu0JFV5BUVFMQZCjCiBEDRgEIhmfIwzd+b27dszzCAgkzjxAQID
+        DAAACwwBP0AiyAAAGiFJREFUeF7tXWu0JFV5BUVFMQZCjCiBEDRgEIhmfIwzd+b27dszzCAgkzjxAQID
         AiK4DCASlQRUfpioCQJKYC0SAkoMhCQ84ooLNYqsuAATo4gPEAKJDwbkKUTFcZK9q/apPlX11alTjzvT
         V3uvtbu66py9z3fOV11dVV1Vvc1oNHgq+BRwmzagTnr6OE79IkGd9FvHL1hYA+qkj2usBtRJP/VrAeqk
         j/cLFgZAnczjGwuAOumnfi1AnfS9+AVBU5n30hh10k/9WoA66XvxC4KmMu+lMeqkn/q1AHXS9+IXBE1l
@@ -238,5 +238,8 @@
   </data>
   <metadata name="guna2Elipse2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>37</value>
   </metadata>
 </root>

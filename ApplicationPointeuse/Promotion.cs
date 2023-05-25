@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationPointeuse
 {
-    public class Groupe
+    public class Promotion
     {
         public int Id { get; set; }
-        public string Nom { get; set; }
-
+        public string Annee { get; set; }
     }
 }
