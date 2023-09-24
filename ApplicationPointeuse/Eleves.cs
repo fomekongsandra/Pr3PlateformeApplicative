@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -144,7 +145,7 @@ namespace ApplicationPointeuse
                 }
                 else
                 {
-                    // l'id 7 correspond a MS2D-FE
+                    // l'id 1 correspond a MS2D-FE
                     Promotions = "1";
                 }
             }
@@ -251,6 +252,7 @@ namespace ApplicationPointeuse
 
         private async void button3_Click(object sender, EventArgs e)
         {
+
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7166");
 
@@ -262,7 +264,7 @@ namespace ApplicationPointeuse
             string Groupes = cmbgroupes.Text;
             if (Groupes != null)
             {
-                if (Groupes == "MS2D-FE")
+                if (Groupes == "MS2D-FA")
                 {
                     Groupes = "1";
                 }
@@ -275,24 +277,132 @@ namespace ApplicationPointeuse
             string Promotions = cmbgroupes.Text;
             if (Promotions != null)
             {
-                //l'id correspondant a la promotion MS2D-Fa = 4
+                //l'id correspondant a la promotion 1
                 if (Promotions == "2022-2023")
                 {
                     Promotions = "1";
                 }
                 else
                 {
-                    // l'id 7 correspond a MS2D-FE
+
                     Promotions = "1";
                 }
             }
             etudiant3.PromotionId = Int32.Parse(Promotions);
 
-            HttpResponseMessage response = await client.DeleteAsync("api/Etudiants/"+ etudiant3.Id);
+            HttpResponseMessage response = await client.DeleteAsync("api/Etudiants/" + etudiant3.Id);
             Clear();
             Eleves eleves = new Eleves();
             eleves.Show();
             this.Close();
+        }
+
+        private void Rechercher()
+        {
+            // Récupérer la valeur du critère de recherche
+            string recherche = recherchetxt.Text;
+
+            // Effacer la sélection précédente
+            dataGridView1.ClearSelection();
+
+            // Parcourir toutes les lignes du DataGridView
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                // Récupérer les valeurs des colonnes "Nom", "Groupe" et "Promotion"
+                string nomCell = row.Cells["Nom"].Value.ToString();
+                string groupeCell = row.Cells["Groupe"].Value.ToString();
+                string promotionCell = row.Cells["Promotion"].Value.ToString();
+
+                // Vérifier si la ligne correspond aux critères de recherche
+                bool filtreNom = string.IsNullOrEmpty(recherche) || nomCell.Contains(recherche);
+                bool filtreGroupe = string.IsNullOrEmpty(recherche) || groupeCell.Contains(recherche);
+                bool filtrePromotion = string.IsNullOrEmpty(recherche) || promotionCell.Contains(recherche);
+
+                // Vérifier si la ligne correspond aux critères de recherche
+                if (filtreNom || filtreGroupe || filtrePromotion)
+                {
+                    // Mettre en évidence la ligne correspondante
+                    row.Selected = true;
+                    row.Visible = true; // Rendre la ligne visible
+                }
+                else
+                {
+                    // Cacher la ligne qui ne correspond pas au critère de recherche
+                    row.Visible = false;
+                }
+            }
+        }
+        private void recherchetxt_TextChanged(object sender, EventArgs e)
+        {
+            Rechercher();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV (*.csv)|*.csv";
+            sfd.FileName = "data.csv";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                StringBuilder sb = new StringBuilder();
+                IEnumerable<string> columnNames = dataGridView1.Columns.Cast<DataGridViewColumn>().Select(column => column.HeaderText);
+                sb.AppendLine(string.Join(",", columnNames));
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    IEnumerable<string> fields = row.Cells.Cast<DataGridViewCell>().Select(cell => cell.Value.ToString());
+                    sb.AppendLine(string.Join(",", fields));
+                }
+                File.WriteAllText(sfd.FileName, sb.ToString());
+                MessageBox.Show("Données exportées avec succès.");
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "CSV (*.csv)|*.csv";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = ofd.FileName;
+
+                try
+                {
+                    // Lire le contenu du fichier CSV
+                    DataTable dataTable = ReadCsvFile(filePath);
+
+                    // Afficher les données dans le DataGridView
+                    dataGridView1.DataSource = dataTable;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erreur lors de l'importation du fichier : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private DataTable ReadCsvFile(string filePath)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string[] headers = reader.ReadLine().Split(',');
+
+                foreach (string header in headers)
+                {
+                    dataTable.Columns.Add(header);
+                }
+
+                while (!reader.EndOfStream)
+                {
+                    string[] rows = reader.ReadLine().Split(',');
+                    dataTable.Rows.Add(rows);
+                }
+            }
+
+            return dataTable;
         }
     }
 }

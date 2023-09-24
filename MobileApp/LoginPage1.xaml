@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MobileApp"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             x:Class="MobileApp.LoginPage1">
+    <StackLayout Padding="20">
+        <Entry Placeholder="ID de l'étudiant" x:Name="etudiantIdEntry" />
+        <Button Text="Se connecter" Clicked="OnConnectClicked" />
+    </StackLayout>
+</ContentPage>
+

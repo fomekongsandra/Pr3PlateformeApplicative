@@ -33,5 +33,11 @@ namespace ApplicationPointeuse
             eleves.Show();
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            groupeform groupeform = new groupeform();
+            groupeform.Show();
+        }
     }
 }

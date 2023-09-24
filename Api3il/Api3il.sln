@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppl3il", "..\WebAppl3il
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationPointeuse", "..\ApplicationPointeuse\ApplicationPointeuse.csproj", "{53385439-245A-4625-8702-B5F0672F600B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Borne3il", "..\Borne3il\Borne3il.csproj", "{47982E72-57F1-4F10-9830-0DB544F0E465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileApp", "..\MobileApp\MobileApp.csproj", "{448757B9-FDED-4948-8EBE-68399820371C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,16 @@ Global
 		{53385439-245A-4625-8702-B5F0672F600B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53385439-245A-4625-8702-B5F0672F600B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53385439-245A-4625-8702-B5F0672F600B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47982E72-57F1-4F10-9830-0DB544F0E465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47982E72-57F1-4F10-9830-0DB544F0E465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47982E72-57F1-4F10-9830-0DB544F0E465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47982E72-57F1-4F10-9830-0DB544F0E465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448757B9-FDED-4948-8EBE-68399820371C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
