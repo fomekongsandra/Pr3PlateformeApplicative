@@ -39,5 +39,11 @@ namespace ApplicationPointeuse
             groupeform groupeform = new groupeform();
             groupeform.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PromoForm promoForm = new PromoForm();
+            promoForm.Show();
+        }
     }
 }

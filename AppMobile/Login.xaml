@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMobile.LoginPage"
+             BackgroundColor="{StaticResource BackgroundColor}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary Source="Resources/Styles/StylesApp.xaml" />
+    </ContentPage.Resources>
+
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Label Text="Connexion" FontSize="Large" TextColor="{StaticResource PrimaryColor}" FontAttributes="Bold" HorizontalOptions="Center" />
+        <Entry x:Name="NomEntry" Placeholder="Nom" />
+        <Entry x:Name="PrenomEntry" Placeholder="Prénom" />
+        <Button Text="Se Connecter" Clicked="OnLoginClicked" />
+    </VerticalStackLayout>
+</ContentPage>

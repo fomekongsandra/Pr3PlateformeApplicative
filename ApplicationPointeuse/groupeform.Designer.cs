@@ -68,6 +68,8 @@
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(394, 287);
             this.dataGridView1.TabIndex = 13;
+       
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // button3
             // 
@@ -89,6 +91,7 @@
             this.button2.TabIndex = 11;
             this.button2.Text = "Supprimer";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // button1
             // 

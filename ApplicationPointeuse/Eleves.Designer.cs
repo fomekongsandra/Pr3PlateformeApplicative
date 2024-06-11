@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Eleves));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.recherchetxt = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -50,8 +52,6 @@
             this.Idtxt = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.recherchetxt = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
@@ -62,7 +62,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(78)))), ((int)(((byte)(103)))));
             this.panel3.Controls.Add(this.recherchetxt);
             this.panel3.Controls.Add(this.label13);
             this.panel3.Controls.Add(this.label6);
@@ -73,6 +73,25 @@
             this.panel3.Size = new System.Drawing.Size(1082, 79);
             this.panel3.TabIndex = 0;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            // 
+            // recherchetxt
+            // 
+            this.recherchetxt.Location = new System.Drawing.Point(772, 26);
+            this.recherchetxt.Name = "recherchetxt";
+            this.recherchetxt.Size = new System.Drawing.Size(237, 26);
+            this.recherchetxt.TabIndex = 4;
+            this.recherchetxt.TextChanged += new System.EventHandler(this.recherchetxt_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Transparent;
+            this.label13.Location = new System.Drawing.Point(612, 26);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(115, 25);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Recherche";
             // 
             // label6
             // 
@@ -97,19 +116,20 @@
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(78)))), ((int)(((byte)(103)))));
             this.panel4.Controls.Add(this.label11);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 569);
+            this.panel4.Location = new System.Drawing.Point(0, 565);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1082, 38);
+            this.panel4.Size = new System.Drawing.Size(1082, 76);
             this.panel4.TabIndex = 1;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(18, 11);
+            this.label11.ForeColor = System.Drawing.Color.Transparent;
+            this.label11.Location = new System.Drawing.Point(33, 22);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(271, 29);
             this.label11.TabIndex = 0;
@@ -185,24 +205,28 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(77)))), ((int)(((byte)(13)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Transparent;
             this.button1.Location = new System.Drawing.Point(23, 482);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 35);
+            this.button1.Size = new System.Drawing.Size(117, 44);
             this.button1.TabIndex = 11;
             this.button1.Text = "Ajouter";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(77)))), ((int)(((byte)(13)))));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.Transparent;
             this.button2.Location = new System.Drawing.Point(151, 482);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 35);
+            this.button2.Size = new System.Drawing.Size(119, 44);
             this.button2.TabIndex = 12;
             this.button2.Text = "Modifier";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
@@ -252,59 +276,47 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(77)))), ((int)(((byte)(13)))));
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Location = new System.Drawing.Point(276, 482);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(136, 35);
+            this.button3.Size = new System.Drawing.Size(136, 44);
             this.button3.TabIndex = 17;
             this.button3.Text = "Supprimer";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(612, 26);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(115, 25);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Recherche";
-            // 
-            // recherchetxt
-            // 
-            this.recherchetxt.Location = new System.Drawing.Point(772, 26);
-            this.recherchetxt.Name = "recherchetxt";
-            this.recherchetxt.Size = new System.Drawing.Size(237, 26);
-            this.recherchetxt.TabIndex = 4;
-            this.recherchetxt.TextChanged += new System.EventHandler(this.recherchetxt_TextChanged);
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(77)))), ((int)(((byte)(13)))));
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.Color.Transparent;
             this.button4.Location = new System.Drawing.Point(904, 97);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(147, 35);
             this.button4.TabIndex = 18;
             this.button4.Text = "Exports Csv";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(77)))), ((int)(((byte)(13)))));
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.Transparent;
             this.button5.Location = new System.Drawing.Point(904, 528);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(147, 35);
             this.button5.TabIndex = 19;
             this.button5.Text = "Imports Csv";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Eleves
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1082, 607);
+            this.ClientSize = new System.Drawing.Size(1082, 641);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);

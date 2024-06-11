@@ -34,6 +34,7 @@
             label1 = new Label();
             comboBox1 = new ComboBox();
             label2 = new Label();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -95,11 +96,20 @@
             label2.TabIndex = 7;
             label2.Text = "Statut";
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(605, 260);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(150, 147);
+            textBox1.TabIndex = 8;
+            // 
             // ScanBorne
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(comboBox1);
             Controls.Add(label1);
@@ -108,6 +118,7 @@
             Controls.Add(pictureBox1);
             Name = "ScanBorne";
             Text = "ScanBorne";
+            Load += ScanBorne_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -121,5 +132,6 @@
         private Label label1;
         private ComboBox comboBox1;
         private Label label2;
+        private TextBox textBox1;
     }
 }

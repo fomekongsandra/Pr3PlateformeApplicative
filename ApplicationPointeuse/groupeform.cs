@@ -38,32 +38,10 @@ namespace ApplicationPointeuse
             nomtxt1.Clear();
 
         }
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:7166");
-            Groupe groupe = new Groupe();
-            groupe.Nom = nomtxt1.Text;
-            HttpResponseMessage response = await client.PostAsJsonAsync("api/Groupes", groupe);
-            Clear();
-            dataGridView1.Refresh();
+       
+       
 
-        }
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
-            {
-                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-                // Accéder aux valeurs des cellules de la ligne sélectionnée
-                string id = selectedRow.Cells["id"].Value.ToString();
-                string nom = selectedRow.Cells["Nom"].Value.ToString();
-
-                idtxt.Text = id;
-                nomtxt1.Text = nom;
-
-            }
-        }
-        private async void button3_Click(object sender, EventArgs e)
+        private  async void button3_Click_1(object sender, EventArgs e)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7166");
@@ -78,7 +56,19 @@ namespace ApplicationPointeuse
             this.Close();
 
         }
-        private async void button2_Click(object sender, EventArgs e)
+
+        private async void button1_Click_1(object sender, EventArgs e)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7166");
+            Groupe groupe = new Groupe();
+            groupe.Nom = nomtxt1.Text;
+            HttpResponseMessage response = await client.PostAsJsonAsync("api/Groupes", groupe);
+            Clear();
+            dataGridView1.Refresh();
+        }
+
+        private async void button2_Click_1(object sender, EventArgs e)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7166");
@@ -95,13 +85,19 @@ namespace ApplicationPointeuse
 
        
 
-        private void button3_Click_1(object sender, EventArgs e)
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+                // Accéder aux valeurs des cellules de la ligne sélectionnée
+                string id = selectedRow.Cells["id"].Value.ToString();
+                string nom = selectedRow.Cells["Nom"].Value.ToString();
 
-        }
+                idtxt.Text = id;
+                nomtxt1.Text = nom;
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
+            }
 
         }
     }

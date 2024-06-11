@@ -1,58 +1,27 @@
-using System.Data.SqlClient;
 
-namespace MobileApp;
+using System;
+using ZXing.QrCode;
 
-public partial class LoginPage1 : ContentPage
+
+using com.google.zxing.qrcode;
+
+namespace MobileApp
 {
-	public LoginPage1()
-	{
-		InitializeComponent();
-	}
-    private void OnConnectClicked(object sender, EventArgs e)
+    public partial class LoginPage1 : ContentPage
     {
-        // Récupérez l'ID saisi par l'utilisateur
-        string studentId = etudiantIdEntry.Text;
-
-        // Vérifiez si l'ID appartient à un étudiant dans la base de données
-        string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=Pointeuse;Integrated Security=True;TrustServerCertificate=True";
-        using (SqlConnection conn = new SqlConnection(connectionString))
+        public LoginPage1()
         {
-            conn.Open();
+            InitializeComponent();
+        }
 
-            string query = "SELECT * FROM etudiant WHERE id = @Id";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@Id", studentId);
-                SqlDataReader reader = cmd.ExecuteReader();
+        private void GenerateBtn_Clicked(object sender, EventArgs e)
+        {
+            QRCoder.QRCodeGenerator qRcodeGenerator = new QRCoder.QRCodeGenerator();
+            QRCoder.QRCodeData qRCodeData = qRcodeGenerator.CreateQrCode(InputText.Text, QRCoder.QRCodeGenerator.ECCLevel.L);
+            QRCoder.PngByteQRCode qRCode = new QRCoder.PngByteQRCode(qRCodeData);
+            byte[] qrCodeBytes = qRCode.GetGraphic(20);
+            QrCodeImage.Source = ImageSource.FromStream(() => new MemoryStream(qrCodeBytes));
 
-                if (reader.Read())
-                {
-                    // L'ID correspond à un étudiant, récupérez les informations et l'heure/la date actuelle
-                    string studentName = reader["nom"].ToString();
-                    string studentFirstName = reader["prenom"].ToString();
-                    string studentGroup = reader["groupe"].ToString();
-                    string studentPromotion = reader["promotion"].ToString();
-                    DateTime currentDateTime = DateTime.Now;
-
-                    // Stockez ces informations dans la variable "scan" (que vous devrez définir)
-                    ScanData scan = new ScanData
-                    {
-                        StudentName = studentName,
-                        StudentFirstName = studentFirstName,
-                        StudentGroup = studentGroup,
-                        StudentPromotion = studentPromotion,
-                        ScanDateTime = currentDateTime
-                    };
-
-                    // Naviguez vers la page de génération de QR Code et passez les informations
-                    Navigation.PushAsync(new GenerateQRCodePage(scan));
-                }
-                else
-                {
-                    // L'ID n'appartient pas à un étudiant, affichez un message d'erreur
-                    DisplayAlert("Erreur", "ID invalide", "OK");
-                }
-            }
         }
     }
 }

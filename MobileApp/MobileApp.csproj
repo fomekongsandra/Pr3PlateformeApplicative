@@ -52,16 +52,16 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
 		<PackageReference Include="SkiaSharp" Version="2.88.6" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+		<PackageReference Include="TwoFactorAuth.Net.QRCoder" Version="1.0.2" />
+		<PackageReference Include="Zen.Barcode.Rendering.Framework" Version="3.1.10729.1" />
 		<PackageReference Include="ZXing" Version="2.1.1" />
 		<PackageReference Include="ZXing.Net" Version="0.16.9" />
 		<PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="GenerateQRCodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="LoginPage1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

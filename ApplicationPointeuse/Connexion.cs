@@ -27,12 +27,24 @@ namespace ApplicationPointeuse
         SqlConnection conn = new SqlConnection(@"Data Source=localhost\\SQLEXPRESS;Initial Catalog=Pointeuse;integrated security=True;TrustServerCertificate=True");
         private async void guna2Button1_Click(object sender, EventArgs e)
         {
-           Menu menu = new Menu();
-            menu.Show();
+           
+
             String login, password;
 
             login = "ruchaud@3il.fr";
             password = "12345@";
+            // Vérifier si les champs de login et de mot de passe sont vides
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            {
+                // Afficher un message d'erreur et empêcher la navigation vers la page du menu
+                MessageBox.Show("Veuillez saisir un nom d'utilisateur et un mot de passe.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                // Les champs sont remplis, vous pouvez passer à la page du menu
+                Menu menu = new Menu();
+                menu.Show();
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

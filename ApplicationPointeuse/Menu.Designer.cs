@@ -48,16 +48,16 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(78)))), ((int)(((byte)(103)))));
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 339);
+            this.panel1.Location = new System.Drawing.Point(0, 327);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(719, 38);
+            this.panel1.Size = new System.Drawing.Size(719, 50);
             this.panel1.TabIndex = 1;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(78)))), ((int)(((byte)(103)))));
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
@@ -99,7 +99,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.White;
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.Location = new System.Drawing.Point(45, 112);
+            this.button1.Location = new System.Drawing.Point(50, 112);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(147, 123);
             this.button1.TabIndex = 10;
@@ -126,6 +126,7 @@
             this.button3.Size = new System.Drawing.Size(151, 123);
             this.button3.TabIndex = 12;
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Menu
             // 
@@ -142,7 +143,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Menu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

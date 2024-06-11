@@ -33,6 +33,11 @@ namespace ApplicationPointeuse
                 MessageBox.Show("Une erreur s'est produite lors de la récupération des promotions.");
             }
         }
+        public void Clear()
+        {
+            nomtxt1.Clear();
+
+        }
 
         private async void button1_Click(object sender, EventArgs e)
         {
@@ -41,7 +46,7 @@ namespace ApplicationPointeuse
             Promotion promotion = new Promotion();
             promotion.Annee = nomtxt1.Text;
             HttpResponseMessage response = await client.PostAsJsonAsync("api/Promotions", promotion);
-            
+            Clear();
             dataGridView1.Refresh();
 
         }

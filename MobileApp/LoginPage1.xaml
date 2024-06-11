@@ -4,9 +4,36 @@
              xmlns:local="clr-namespace:MobileApp"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="MobileApp.LoginPage1">
-    <StackLayout Padding="20">
-        <Entry Placeholder="ID de l'étudiant" x:Name="etudiantIdEntry" />
-        <Button Text="Se connecter" Clicked="OnConnectClicked" />
+    <StackLayout
+            Spacing="10"
+            Padding="30"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center">
+        <Label Text="Entrer les données"
+                   x:Name="LabelTitle"
+                   FontSize="18"
+                   HorizontalOptions="FillAndExpand"/>
+
+        <Frame BorderColor="LightSlateGray" Padding="10,0">
+            <Entry x:Name="InputText"
+                       Text=""
+                       Placeholder="Entrer les données"
+                       FontSize="18"
+                       HorizontalOptions="FillAndExpand"/>
+        </Frame>
+
+        <Button x:Name="GenerateBtn"
+                    Text="Générer QR"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="GenerateBtn_Clicked"/>
+
+        <Frame BorderColor="LightSlateGray"
+                   BackgroundColor="White"
+                   Padding="10">
+            <Image x:Name="QrCodeImage"
+                       HeightRequest="200"
+                       WidthRequest="200"/>
+        </Frame>
     </StackLayout>
 </ContentPage>
 
