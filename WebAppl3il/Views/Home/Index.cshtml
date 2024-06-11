@@ -8,31 +8,26 @@
     var ListePromotion = ViewData["Promotion"] as List<Promotion>;
     var ListePresence = ViewData["Emargement"] as List<Emargement>;
 
-     string GetPresenceStatus(DateTime dateEmargement)
+  
+
+    string GetPresenceStatus(DateTime dateEmargement)
+    {
+        TimeSpan timeOfDay = dateEmargement.TimeOfDay;
+
+        TimeSpan matinStart = new TimeSpan(8, 30, 0);
+        TimeSpan matinEnd = new TimeSpan(8, 35, 0);
+        TimeSpan apresMidiStart = new TimeSpan(13, 30, 0);
+        TimeSpan apresMidiEnd = new TimeSpan(13, 35, 0);
+
+        if ((timeOfDay >= matinStart && timeOfDay <= matinEnd) || (timeOfDay >= apresMidiStart && timeOfDay <= apresMidiEnd))
         {
-            TimeSpan timeOfDay = dateEmargement.TimeOfDay;
-
-            TimeSpan plage1Start = new TimeSpan(8, 35, 0);
-            TimeSpan plage1End = new TimeSpan(10, 0, 0);
-            TimeSpan plage2Start = new TimeSpan(10, 35, 0);
-            TimeSpan plage2End = new TimeSpan(12, 0, 0);
-            TimeSpan plage3Start = new TimeSpan(13, 30, 0);
-            TimeSpan plage3End = new TimeSpan(15, 0, 0);
-            TimeSpan plage4Start = new TimeSpan(15, 15, 0);
-            TimeSpan plage4End = new TimeSpan(16, 45, 0);
-
-            if ((timeOfDay >= plage1Start && timeOfDay <= plage1End) ||
-                (timeOfDay >= plage2Start && timeOfDay <= plage2End) ||
-                (timeOfDay >= plage3Start && timeOfDay <= plage3End) ||
-                (timeOfDay >= plage4Start && timeOfDay <= plage4End))
-            {
-                return "Absent";
-            }
-            else
-            {
-                return "Présent";
-            }
+            return "Présent";
         }
+        else
+        {
+            return "Absent";
+        }
+    }
 }
 
 <style>
@@ -41,28 +36,67 @@
         font-family: Arial, sans-serif;
     }
 
-    h2 {
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        color: #333;
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
     }
 
+        .header img {
+            height: 50px; /* Taille du logo */
+            margin-right: 20px; /* Espace entre le logo et le titre */
+        }
+
+        .header h2 {
+            color: #014e67; /* Couleur bleu */
+            font-size: 24px; /* Taille du titre plus petite */
+        }
+
     .table-header {
-       /* background-color: #007bff;*/
+        background-color: #014e67;
         color: #fff;
         font-weight: bold;
-        font-size:20px;
-
+        font-size: 20px;
+        padding: 10px;
     }
 
     .table-row {
         background-color: #fff;
     }
 
-    .table-row:hover {
-        background-color: #f8f9fa;
+        .table-row:hover {
+            background-color: #f8f9fa;
+        }
+
+    .filter-select {
+        display: inline-block;
+        margin-left: 10px;
+        position: relative;
     }
+
+        .filter-select select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .filter-select::before {
+            content: "\f0d7";
+            font-family: "Font Awesome 5 Free";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #999;
+            pointer-events: none;
+        }
+
+        .filter-select select:focus + ::before {
+            color: #007bff;
+        }
 
     .filter-input {
         margin-bottom: 10px;
@@ -71,6 +105,11 @@
         border-radius: 5px;
         width: 300px;
     }
+
+    .search-label {
+        color: #ff6600;
+        font-weight: bold;
+    }
 </style>
 
 <script>
@@ -78,17 +117,27 @@
         var input = document.getElementById("filterInput").value.toUpperCase();
         var table = document.getElementById("etudiantTable");
         var tr = table.getElementsByTagName("tr");
-        for (var i = 0; i < tr.length; i++) {
+        var selectedStatus = document.getElementById("statusFilter").value;
+
+        for (var i = 1; i < tr.length; i++) {
             var tdNom = tr[i].getElementsByTagName("td")[0];
             var tdGroupe = tr[i].getElementsByTagName("td")[2];
             var tdPromotion = tr[i].getElementsByTagName("td")[3];
-            if (tdNom || tdGroupe || tdPromotion) {
+            var tdDateEmargement = tr[i].getElementsByTagName("td")[4];
+            var tdStatus = tr[i].getElementsByTagName("td")[5];
+
+            if (tdNom || tdGroupe || tdPromotion || tdDateEmargement || tdStatus) {
                 var nom = tdNom.textContent || tdNom.innerText;
                 var groupe = tdGroupe.textContent || tdGroupe.innerText;
                 var promotion = tdPromotion.textContent || tdPromotion.innerText;
-                if (nom.toUpperCase().indexOf(input) > -1 ||
+                var emargement = tdDateEmargement.textContent || tdDateEmargement.innerText;
+                var statut = tdStatus.textContent || tdStatus.innerText;
+
+                if ((nom.toUpperCase().indexOf(input) > -1 ||
                     groupe.toUpperCase().indexOf(input) > -1 ||
-                    promotion.toUpperCase().indexOf(input) > -1) {
+                    promotion.toUpperCase().indexOf(input) > -1 ||
+                    emargement.toString().indexOf(input) > -1) &&
+                    (selectedStatus === "" || groupe === selectedStatus)) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -96,37 +145,23 @@
             }
         }
     }
-       function filterByDate(date) {
-        var tableRows = document.getElementsByClassName("date-emargement");
-        for (var i = 0; i < tableRows.length; i++) {
-            var row = tableRows[i];
-            var rowDate = new Date(row.getAttribute("data-emargement-date"));
-            if (rowDate.toDateString() === date.toDateString()) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        }
-    }
-     function resetTable() {
-        var tableRows = document.getElementsByClassName("date-emargement");
-        for (var i = 0; i < tableRows.length; i++) {
-            var row = tableRows[i];
-            row.style.display = "";
-        }
-    }
 </script>
 
-<center>
+<div class="header">
+    <img src="~/img/logo-3il-part@2x.png" alt="Logo 3IL" />
     <h2>Liste des étudiants qui ont émargé</h2>
-</center>
+</div>
 
 <div>
-    <label for="filterInput">Recherche : </label>
-    <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Rechercher par groupe, nom ou promotion...">
-</div>
-<div>
-    <button onclick="resetTable()">Réinitialiser</button>
+    <label for="filterInput" class="search-label">Recherche :</label>
+    <input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Rechercher par groupe, nom ou promotion..." class="filter-input">
+    <div class="filter-select">
+        <select id="statusFilter" onchange="filterTable()">
+            <option value="">Tous</option>
+            <option value="ERIS-FA">ERIS-FA</option>
+            <option value="MS2D-FA">MS2D-FA</option>
+        </select>
+    </div>
 </div>
 
 <table id="etudiantTable" class="table">
@@ -136,47 +171,44 @@
             <th class="table-header">@Html.DisplayName("Prénom")</th>
             <th class="table-header">@Html.DisplayName("Groupe")</th>
             <th class="table-header">@Html.DisplayName("Promotion")</th>
-            <th class="table-header">@Html.DisplayName("Presence")</th>
+            <th class="table-header">@Html.DisplayName("Présence")</th>
             <th class="table-header">@Html.DisplayName("Statut")</th>
-
         </tr>
     </thead>
-    <!-- ... -->
-
-<tbody>
-    @if (ListeEtudiant != null)
-    {
-         ListePresence = ListePresence.OrderByDescending(p => p.DateEmargement).ToList();
-        @foreach (Etudiant row in ListeEtudiant)
+    <tbody>
+        @if (ListeEtudiant != null)
         {
-            @foreach (Groupe row1 in ListeGroupe)
+            @foreach (Etudiant etudiant  in ListeEtudiant)
             {
-                @foreach (Promotion row2 in ListePromotion)
+                @foreach (Groupe groupe in ListeGroupe)
                 {
-                    @foreach (Emargement row3 in ListePresence)
+                    @foreach ( Promotion promotion in ListePromotion)
                     {
-                        @if (row.GroupeId == row1.Id && row.PromotionId == row2.Id && row3.EtudiantId == row.Id)
+                        @foreach (Emargement emargement in ListePresence)
                         {
-                            <tr class="table-row date-emargement" data-emargement-date="@row3.DateEmargement">
-                                <td>@row.Nom</td>
-                                <td>@row.Prenom</td>
-                                <td>@row1.Nom</td>
-                                <td>@row2.Annee</td>
-                                 <td><a href="#" onclick="filterByDate(new Date('@row3.DateEmargement'));">@row3.DateEmargement</a></td>
-                                @{
-                                    string presenceStatus = GetPresenceStatus(row3.DateEmargement);
-                                    string statusClass = (presenceStatus == "Absent") ? "text-danger" : "text-success";
-                                }
-                                <td class="@statusClass">@presenceStatus</td>
-                            </tr>
+                            @if (etudiant.PromotionId == promotion.Id & emargement.EtudiantId == etudiant.Id)
+                            {
+                                string presenceStatus = GetPresenceStatus(emargement.DateEmargement);
+                                string statusClass = (presenceStatus == "Absent") ? "text-danger" : "text-success";
+                                string emargementText = (presenceStatus == "Présent") ? "Emargé" : "Absent";
+                                <tr class="table-row">
+                                    <td>@etudiant.Nom</td>
+                                    <td>@etudiant.Prenom</td>
+                                    <td>@groupe.Nom</td>
+                                    <td>@promotion.Annee</td>
+                                    <td>@emargement.DateEmargement</td>
+                                    <td class="status-column @statusClass">@emargementText</td>
+                                </tr>
+                            }
                         }
                     }
                 }
+
+        
+                
+
+               
             }
         }
-    }
-</tbody>
-
-<!-- ... -->
-
+    </tbody>
 </table>

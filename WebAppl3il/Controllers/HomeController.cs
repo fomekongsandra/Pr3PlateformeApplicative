@@ -1,6 +1,7 @@
 ﻿using Api3il.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -17,16 +18,17 @@ namespace WebAppl3il.Controllers
 {
     public class HomeController : Controller
     {
-        
-        private readonly HttpClient _httpClient;
+
+       private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
 
         string baseURL = "https://localhost:7166";
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHttpClientFactory httpClientFactory, ILogger<HomeController> logger)
         {
+            _httpClient = httpClientFactory.CreateClient();
             _logger = logger;
-            
+
         }
 
 
@@ -94,7 +96,9 @@ namespace WebAppl3il.Controllers
             return View();
         }
 
-       
+
+
+
     }
 }
 

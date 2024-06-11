@@ -1,0 +1,129 @@
+﻿@using System.Data
+@using Api3il.Models;
+@model DataTable
+@{
+    var ListeEtudiant = ViewData["Etudiant"] as List<Etudiant>;
+    var ListePresence = ViewData["Presence"] as List<Presence>;
+
+    string GetStatus(bool Status)
+    {
+        if (Status == true)
+        {
+            return "Present";
+        }
+        else
+        {
+            return "Absent";
+        }
+    }
+
+}
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<!-- jsPDF-AutoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+
+
+<style>
+  
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #ff4500;
+    }
+
+    
+
+    tr:hover {
+        background-color: #1e90ff;
+    }
+    .filter-input {
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 300px;
+    }
+</style>
+@* code pour crée la liste de presence  *@
+@section Scripts {
+    <script>
+        document.getElementById('generate-pdf').addEventListener('click', function () {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.text("Liste des absences", 75, 15, { align: 'center' }); 
+
+            const espace = 5; 
+            let yPosition = 15 + espace; 
+
+            const table = document.getElementById('etudiantTable');
+            const rows = table.querySelectorAll('tr');
+
+            let data = []; 
+
+           
+            rows.forEach(row => {
+                let rowData = [];
+                const cells = row.querySelectorAll('td, th');
+              
+                cells.forEach(cell => {
+                    rowData.push(cell.textContent.trim());
+                });
+                data.push(rowData);
+            });
+            
+
+           
+            doc.autoTable({
+                startY: yPosition,
+                head: [
+                    ['Nom', 'Prénom', 'Emagement', 'Statut'] 
+                ],
+                body: data 
+            });
+
+            const now = new Date();
+            const timestamp = now.getFullYear() + ('0' + (now.getMonth() + 1)).slice(-2) + ('0' + now.getDate()).slice(-2) + '_' + ('0' + now.getHours()).slice(-2) + ('0' + now.getMinutes()).slice(-2);
+
+            doc.save('absences_' + timestamp + '.pdf');
+        });
+        
+    </script>
+    @* <script>
+        $(function () {
+            $('#calendar').fullCalendar({
+                events: [
+                    {
+                        title: 'Événement 1',
+                        start: '2023-05-20'
+                    },
+                    {
+                        title: 'Événement 2',
+                        start: '2023-05-21',
+                        end: '2023-05-23'
+                    },
+                    // Ajoutez d'autres événements ici...
+                ]
+            });
+        });
+    </script> *@
+<script>
