@@ -19,7 +19,7 @@ namespace WebAppl3il.Controllers
     public class HomeController : Controller
     {
 
-       private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
 
         string baseURL = "https://localhost:7166";
@@ -95,10 +95,43 @@ namespace WebAppl3il.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> Presence()
+        {
+            List<Etudiant> Etudiants = new List<Etudiant>();
+            List<Emargement> Emargements = new List<Emargement>();
+
+            using (var Client = new HttpClient())
+
+            {
+                Client.BaseAddress = new Uri(baseURL);
+                Client.DefaultRequestHeaders.Accept.Clear();
+                Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage getData1 = await Client.GetAsync("api/Etudiants");
+                HttpResponseMessage getData4 = await Client.GetAsync("api/Emargements");
+
+                if (getData1.IsSuccessStatusCode && getData4.IsSuccessStatusCode)
+                {
+                    string results1 = await getData1.Content.ReadAsStringAsync();
+                    Etudiants = JsonConvert.DeserializeObject<List<Etudiant>>(results1);
+
+                    string results4 = await getData4.Content.ReadAsStringAsync();
+                    Emargements = JsonConvert.DeserializeObject<List<Emargement>>(results4);
+                }
+                else
+                {
+                    Console.WriteLine("Erreur lors de l'appel à l'API web");
+                }
+
+                ViewData["Etudiant"] = Etudiants;
+                ViewData["Emargement"] = Emargements;
+
+                return View();
+            }
 
 
 
-
+        }
     }
 }
 

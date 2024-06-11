@@ -43,14 +43,14 @@
         margin: 20px 0;
     }
 
-        .header img {
-            height: 50px; /* Taille du logo */
-            margin-right: 20px; /* Espace entre le logo et le titre */
-        }
+        .
 
         .header h2 {
             color: #014e67; /* Couleur bleu */
             font-size: 24px; /* Taille du titre plus petite */
+            margin: 0; /* Enlever la marge par défaut */
+            flex-grow: 1; /* Permet de centrer le texte */
+            text-align: center; /* Centre le texte dans l'espace disponible */
         }
 
     .table-header {
@@ -110,6 +110,7 @@
         color: #ff6600;
         font-weight: bold;
     }
+
 </style>
 
 <script>
@@ -147,10 +148,9 @@
     }
 </script>
 
-<div class="header">
-    <img src="~/img/logo-3il-part@2x.png" alt="Logo 3IL" />
-    <h2>Liste des étudiants qui ont émargé</h2>
-</div>
+<center><h2>Liste des étudiants qui ont émargé</h2></center>
+   
+<br />
 
 <div>
     <label for="filterInput" class="search-label">Recherche :</label>
@@ -171,8 +171,7 @@
             <th class="table-header">@Html.DisplayName("Prénom")</th>
             <th class="table-header">@Html.DisplayName("Groupe")</th>
             <th class="table-header">@Html.DisplayName("Promotion")</th>
-            <th class="table-header">@Html.DisplayName("Présence")</th>
-            <th class="table-header">@Html.DisplayName("Statut")</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -184,23 +183,19 @@
                 {
                     @foreach ( Promotion promotion in ListePromotion)
                     {
-                        @foreach (Emargement emargement in ListePresence)
-                        {
-                            @if (etudiant.PromotionId == promotion.Id & emargement.EtudiantId == etudiant.Id)
+                        
+                            @if (etudiant.PromotionId == promotion.Id )
                             {
-                                string presenceStatus = GetPresenceStatus(emargement.DateEmargement);
-                                string statusClass = (presenceStatus == "Absent") ? "text-danger" : "text-success";
-                                string emargementText = (presenceStatus == "Présent") ? "Emargé" : "Absent";
+                                
                                 <tr class="table-row">
                                     <td>@etudiant.Nom</td>
                                     <td>@etudiant.Prenom</td>
                                     <td>@groupe.Nom</td>
                                     <td>@promotion.Annee</td>
-                                    <td>@emargement.DateEmargement</td>
-                                    <td class="status-column @statusClass">@emargementText</td>
+                                    
                                 </tr>
                             }
-                        }
+                        
                     }
                 }
 
